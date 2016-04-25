@@ -1,0 +1,4 @@
+alias rebash=$HOME/.zshrc
+alias gtp='cd ~/git/work/Angular2TestHarness'
+alias ealias='vim ~/.alias'
+
