@@ -1,4 +1,9 @@
-alias rebash=$HOME/.zshrc
-alias gtp='cd ~/git/work/Angular2TestHarness'
-alias ealias='vim ~/.alias'
-
+alias editprofile='vim ~/.bash_profile'
+alias editalias='vim ~/.alias'
+alias eset='vim ~/.custom_settings'
+alias la='ls -a'
+alias checkout='git checkout'
+alias gaa='git add -A'
+alias gcwip='git add -A && git commit -m WIP'
+alias gamend='git add -A && git commit --amend'
+alias turbostash='git add -A && git stash'
