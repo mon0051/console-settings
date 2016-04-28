@@ -1,3 +1,6 @@
+Font=Sauce Code Powerline
+FontHeight=14
+BoldAsFont=no
 ForegroundColour=217,230,242
 BackgroundColour=13,25,38
 CursorColour=217,230,242
@@ -17,5 +20,3 @@ Cyan=122,184,184
 BoldCyan=189,219,219
 White=217,217,217
 BoldWhite=255,255,255
-Font=Sauce Code Powerline
-FontHeight=16
