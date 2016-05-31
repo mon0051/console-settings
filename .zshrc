@@ -55,6 +55,7 @@ plugins=(git)
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
+export PATH=/cygdrive/c/Program\ Files\ \(x86\)/JetBrains/WebStorm\ 2016.1/bin/:$PATH
 
 source $ZSH/oh-my-zsh.sh
 

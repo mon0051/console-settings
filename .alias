@@ -1,9 +1,42 @@
-alias editprofile='vim ~/.bash_profile'
-alias editalias='vim ~/.alias'
-alias eset='vim ~/.custom_settings'
+alias editprofile='code ~/.bash_profile'
+alias editalias='code ~/.alias'
+alias eset='code ~/.custom_settings'
 alias la='ls -a'
 alias checkout='git checkout'
 alias gaa='git add -A'
 alias gcwip='git add -A && git commit -m WIP'
 alias gamend='git add -A && git commit --amend'
 alias turbostash='git add -A && git stash'
+alias qpush='git add -A && git commit -m Quick_Push && git push'
+alias fpush='git push --force origin $(git rev-parse --abbrev-ref HEAD)'
+alias db:recreate='./BlueWave\ Database\ Recreate.bat'
+alias db:recreate-dev='./BlueWave\ Database\ Recreate\ Dev.bat'
+
+SQL_TEMP_LOCATION='D:\\temp.bak'
+SQL_DATA_PATH='C:\Program Files\Microsoft SQL Server\MSSQL11.SQL2012\MSSQL\DATA\'
+SQL_PROJECT_SERVER=.\\SQL2012
+SQL_PROJECT_BACKUP='D:\\BlueWave_dev_data.bak'
+
+db:migrate (){
+    ~/medEbridge2/BlueWave\ Database\ Upgrade.bat
+}
+
+db:recreate () {
+    SQLCMD -E -S $SQL_PROJECT_SERVER -Q "BACKUP DATABASE BlueWave TO DISK='"$SQL_TEMP_LOCATION"'"
+    SQLCMD -E -S $SQL_PROJECT_SERVER -Q "DROP DATABASE BLueWave"
+    SQLCMD -E -S $SQL_PROJECT_SERVER -Q "
+        RESTORE DATABASE BlueWave FROM DISK='"$SQL_PROJECT_BACKUP"'
+        WITH FILE = 1,
+        MOVE N'BlueWave' TO N'"$SQL_DATA_PATH"BlueWave.mdf',
+        MOVE N'BlueWave_log' TO N'"$SQL_DATA_PATH"BlueWave_Log.mdf'"
+    db:migrate
+}
+
+remaster (){
+    THIS_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+    git pull origin $THIS_BRANCH
+    git checkout master
+    git pull origin master
+    git checkout $THIS_BRANCH
+    git rebase master
+}
