@@ -11,21 +11,19 @@ alias qpush='git add -A && git commit -m Quick_Push && git push'
 alias fpush='git push --force origin $(git rev-parse --abbrev-ref HEAD)'
 alias db:recreate='./BlueWave\ Database\ Recreate.bat'
 alias db:recreate-dev='./BlueWave\ Database\ Recreate\ Dev.bat'
+alias rebash='. ~/.vars && . ~/.alias && . ~/.custom_settings'
 
-SQL_TEMP_LOCATION='D:\\temp.bak'
-SQL_DATA_PATH='C:\Program Files\Microsoft SQL Server\MSSQL11.SQL2012\MSSQL\DATA\'
-SQL_PROJECT_SERVER=.\\SQL2012
-SQL_PROJECT_BACKUP='D:\\BlueWave_dev_data.bak'
+
 
 db:migrate (){
-    ~/medEbridge2/BlueWave\ Database\ Upgrade.bat
+    $RAVEN_PROJECT_PATH/BlueWave\ Database\ Upgrade.bat
 }
 
 db:recreate () {
     SQLCMD -E -S $SQL_PROJECT_SERVER -Q "BACKUP DATABASE BlueWave TO DISK='"$SQL_TEMP_LOCATION"'"
     SQLCMD -E -S $SQL_PROJECT_SERVER -Q "DROP DATABASE BLueWave"
     SQLCMD -E -S $SQL_PROJECT_SERVER -Q "
-        RESTORE DATABASE BlueWave FROM DISK='"$SQL_PROJECT_BACKUP"'
+        RESTORE DATABASE "$SQL_PROJECT_NAME" FROM DISK='"$SQL_PROJECT_BACKUP"'
         WITH FILE = 1,
         MOVE N'BlueWave' TO N'"$SQL_DATA_PATH"BlueWave.mdf',
         MOVE N'BlueWave_log' TO N'"$SQL_DATA_PATH"BlueWave_Log.mdf'"
@@ -40,3 +38,5 @@ remaster (){
     git checkout $THIS_BRANCH
     git rebase master
 }
+
+echo "Alias's Updated"

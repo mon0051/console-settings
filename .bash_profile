@@ -1,8 +1,3 @@
-source ~/.bashrc
-
-
-
-
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -16,8 +11,8 @@ export CYGWIN=winsymlinks:native
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-alias rebash='. ~/.bash_profile'
 alias cinst='apt-cyg install'
 
-source ~/.custom_settings
+source ~/.vars
 source ~/.alias
+source ~/.custom_settings
