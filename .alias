@@ -1,4 +1,5 @@
 alias editprofile='code ~/.bash_profile'
+alias editvars='code ~/.vars'
 alias editalias='code ~/.alias'
 alias eset='code ~/.custom_settings'
 alias la='ls -a'
@@ -13,30 +14,34 @@ alias db:recreate='./BlueWave\ Database\ Recreate.bat'
 alias db:recreate-dev='./BlueWave\ Database\ Recreate\ Dev.bat'
 alias rebash='. ~/.vars && . ~/.alias && . ~/.custom_settings'
 
-
+alias sql:cmd='SQLCMD -E -S $SQL_PROJECT_SERVER -Q '
 
 db:migrate (){
     $RAVEN_PROJECT_PATH/BlueWave\ Database\ Upgrade.bat
 }
 
 db:recreate () {
-    SQLCMD -E -S $SQL_PROJECT_SERVER -Q "BACKUP DATABASE BlueWave TO DISK='"$SQL_TEMP_LOCATION"'"
-    SQLCMD -E -S $SQL_PROJECT_SERVER -Q "DROP DATABASE BLueWave"
-    SQLCMD -E -S $SQL_PROJECT_SERVER -Q "
-        RESTORE DATABASE "$SQL_PROJECT_NAME" FROM DISK='"$SQL_PROJECT_BACKUP"'
-        WITH FILE = 1,
-        MOVE N'BlueWave' TO N'"$SQL_DATA_PATH"BlueWave.mdf',
-        MOVE N'BlueWave_log' TO N'"$SQL_DATA_PATH"BlueWave_Log.mdf'"
+    sql:cmd "BACKUP DATABASE BlueWave TO DISK='"$SQL_TEMP_LOCATION"'"
+    sql:cmd "ALTER DATABASE BlueWave SET single_user WITH ROLLBACK immediate;
+             DROP DATABASE BLueWave;"
+    sql:cmd "RESTORE DATABASE "$SQL_PROJECT_NAME" FROM DISK='"$SQL_PROJECT_BACKUP"'
+             WITH FILE = 1,
+             MOVE N'"$SQL_PROJECT_NAME"' TO N'"$SQL_DATA_PATH"BlueWave.mdf',
+             MOVE N'"$SQL_PROJECT_NAME"_log' TO N'"$SQL_DATA_PATH"BlueWave_Log.mdf'"
+    sql:cmd "ALTER AUTHORIZATION ON DATABASE::"$SQL_PROJECT_NAME" TO "$PROJECT_APPPOOL_USER
     db:migrate
 }
 
 remaster (){
+    git add -A
+    git commit -m 'Auto commit before merge in master'
     THIS_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
     git pull origin $THIS_BRANCH
     git checkout master
     git pull origin master
     git checkout $THIS_BRANCH
-    git rebase master
+    git merge master
+    git push --set-upstream origin $THIS_BRANCH
 }
 
 echo "Alias's Updated"
