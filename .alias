@@ -20,6 +20,26 @@ db:migrate (){
     $RAVEN_PROJECT_PATH/BlueWave\ Database\ Upgrade.bat
 }
 
+db:backup (){
+    sql:cmd "BACKUP DATABASE BlueWave TO DISK='"$SQL_TEMP_LOCATION$(date +%s).bak"'"
+}
+
+db:restore (){
+    if [ -z "$1" ]
+    then
+        RESTORE_TARGET=$SQL_PROJECT_BACKUP
+    else
+        RESTORE_TARGET=$1
+    fi
+    sql:cmd "ALTER DATABASE BlueWave SET single_user WITH ROLLBACK immediate;
+             DROP DATABASE BLueWave;"
+    sql:cmd "RESTORE DATABASE "$SQL_PROJECT_NAME" FROM DISK='"$RESTORE_TARGET"'
+             WITH FILE = 1,
+             MOVE N'"$SQL_PROJECT_NAME"' TO N'"$SQL_DATA_PATH"BlueWave.mdf',
+             MOVE N'"$SQL_PROJECT_NAME"_log' TO N'"$SQL_DATA_PATH"BlueWave_Log.mdf'"
+    sql:cmd "ALTER AUTHORIZATION ON DATABASE::"$SQL_PROJECT_NAME" TO "$PROJECT_APPPOOL_USER
+}
+
 db:recreate () {
     sql:cmd "BACKUP DATABASE BlueWave TO DISK='"$SQL_TEMP_LOCATION"'"
     sql:cmd "ALTER DATABASE BlueWave SET single_user WITH ROLLBACK immediate;
