@@ -13,6 +13,8 @@ alias fpush='git push --force origin $(git rev-parse --abbrev-ref HEAD)'
 alias db:recreate='./BlueWave\ Database\ Recreate.bat'
 alias db:recreate-dev='./BlueWave\ Database\ Recreate\ Dev.bat'
 alias rebash='. ~/.vars && . ~/.alias && . ~/.custom_settings'
+alias untar='tar -zxvf'
+alias convert='~/bin/convert.exe'
 
 alias sql:cmd='SQLCMD -E -S $SQL_PROJECT_SERVER -Q '
 
@@ -66,6 +68,19 @@ remaster (){
     git pull origin master
     git checkout $THIS_BRANCH
     git merge master
+    git push --set-upstream origin $THIS_BRANCH
+}
+
+git:cleanup (){
+    echo "This Will throw error \"fatal: branch name required\" if there are no branchs that will be cleaned"
+    THIS_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+    git checkout master
+    git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d
+    git checkout $THIS_BRANCH
+}
+
+pushup (){
+    THIS_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
     git push --set-upstream origin $THIS_BRANCH
 }
 
