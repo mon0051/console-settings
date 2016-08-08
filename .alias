@@ -52,6 +52,11 @@ db:recreate () {
     db:migrate
 }
 
+mountHostShare () {
+  sudo mount -t vboxsf archive /mnt/vbox
+  sudo mount -t vboxsf Git /git
+}
+
 remaster (){
     git add -A
     git commit -m 'Auto commit before merge in master'
