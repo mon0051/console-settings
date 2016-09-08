@@ -19,7 +19,7 @@ alias convert='~/bin/convert.exe'
 alias sql:cmd='SQLCMD -E -S $SQL_PROJECT_SERVER -Q '
 
 db:migrate (){
-    $RAVEN_PROJECT_PATH/BlueWave\ Database\ Upgrade.bat
+    $RAVEN_PROJECT_PATH/$UPDATE_SCRIPT_NAME
 }
 
 db:backup (){
@@ -39,7 +39,7 @@ db:restore (){
              WITH FILE = 1,
              MOVE N'"$SQL_PROJECT_NAME"' TO N'"$SQL_DATA_PATH"BlueWave.mdf',
              MOVE N'"$SQL_PROJECT_NAME"_log' TO N'"$SQL_DATA_PATH"BlueWave_Log.mdf'"
-    sql:cmd "ALTER AUTHORIZATION ON DATABASE::"$SQL_PROJECT_NAME" TO "$PROJECT_APPPOOL_USER
+    #sql:cmd "ALTER AUTHORIZATION ON DATABASE::"$SQL_PROJECT_NAME" TO "$PROJECT_APPPOOL_USER
 }
 
 db:recreate () {
@@ -50,7 +50,7 @@ db:recreate () {
              WITH FILE = 1,
              MOVE N'"$SQL_PROJECT_NAME"' TO N'"$SQL_DATA_PATH"BlueWave.mdf',
              MOVE N'"$SQL_PROJECT_NAME"_log' TO N'"$SQL_DATA_PATH"BlueWave_Log.mdf'"
-    sql:cmd "ALTER AUTHORIZATION ON DATABASE::"$SQL_PROJECT_NAME" TO "$PROJECT_APPPOOL_USER
+    #sql:cmd "ALTER AUTHORIZATION ON DATABASE::"$SQL_PROJECT_NAME" TO "$PROJECT_APPPOOL_USER
     db:migrate
 }
 
