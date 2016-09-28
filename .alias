@@ -18,6 +18,12 @@ alias convert='~/bin/convert.exe'
 
 alias sql:cmd='SQLCMD -E -S $SQL_PROJECT_SERVER -Q '
 
+ff:core(){
+    (cd ~/forefront/api/src/ForeFrontCoreData && dotnet $1) 
+    (cd ~/forefront/api/src/ForeFrontCoreUsers && dotnet $1) 
+    (cd ~/forefront/api/src/ForeFrontCoreWeb && dotnet $1) 
+}
+
 db:migrate (){
     $RAVEN_PROJECT_PATH/$UPDATE_SCRIPT_NAME
 }
