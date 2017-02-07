@@ -14,9 +14,39 @@ alias db:recreate='./BlueWave\ Database\ Recreate.bat'
 alias db:recreate-dev='./BlueWave\ Database\ Recreate\ Dev.bat'
 alias rebash='. ~/.vars && . ~/.alias && . ~/.custom_settings'
 alias untar='tar -zxvf'
-alias convert='~/bin/convert.exe'
 
 alias sql:cmd='SQLCMD -E -S $SQL_PROJECT_SERVER -Q '
+
+ssh:forefront(){
+    ssh -i ~/.ssh/azure_ubuntu forefront@52.163.58.130
+}
+
+selfsign(){
+    mkdir $1
+    cd $1
+    openssl genrsa -out key.pem 4096
+    openssl req -new -sha256 -key key.pem -out csr.csr
+    openssl req -x509 -sha256 -days 365 -key key.pem -in csr.csr -out cert.pem
+    openssl pkcs12 -inkey key.pem -in cert.pem -export -out pfx.pfx
+}
+
+ICU_UAT_SERVER=ubuntu@ec2-52-62-220-44.ap-southeast-2.compute.amazonaws.com
+ICU_PROD_SERVER=ubuntu@ec2-54-206-102-33.ap-southeast-2.compute.amazonaws.com
+ICU_SSH_KEY='icuServerKeyPairSydney.pem'
+
+ssh:icutest(){
+    cd ~/.ssh
+    ssh -i $ICU_SSH_KEY $ICU_UAT_SERVER
+}
+
+ssh:icuprod(){
+    cd ~/.ssh
+    ssh -i $ICU_SSH_KEY $ICU_PROD_SERVER
+}
+
+im:convert(){
+    ~/bin/ImageMagick/bin/convert.exe $1 $2 $3 $4 $5 $6
+}
 
 ff:core(){
     (cd ~/forefront/api/src/ForeFrontCoreData && dotnet $1) 

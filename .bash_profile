@@ -16,3 +16,6 @@ alias cinst='apt-cyg install'
 source ~/.vars
 source ~/.alias
 source ~/.custom_settings
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+#export SDKMAN_DIR="/home/andrew.monteith/.sdkman"
+#[[ -s "/home/andrew.monteith/.sdkman/bin/sdkman-init.sh" ]] && source "/home/andrew.monteith/.sdkman/bin/sdkman-init.sh"
