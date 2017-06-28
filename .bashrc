@@ -1,4 +1,6 @@
-source ~/.alias
+if [ -t 1 ]; then
+exec zsh
+fi
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!

@@ -14,7 +14,7 @@ alias db:recreate='./BlueWave\ Database\ Recreate.bat'
 alias db:recreate-dev='./BlueWave\ Database\ Recreate\ Dev.bat'
 alias rebash='. ~/.vars && . ~/.alias && . ~/.custom_settings'
 alias untar='tar -zxvf'
-
+alias sinst='sudo apt-get install'
 alias sql:cmd='SQLCMD -E -S $SQL_PROJECT_SERVER -Q '
 
 ssh:forefront(){
