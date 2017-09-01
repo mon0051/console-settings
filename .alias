@@ -16,6 +16,7 @@ alias rebash='. ~/.vars && . ~/.alias && . ~/.custom_settings'
 alias untar='tar -zxvf'
 alias sinst='sudo apt-get install'
 alias sql:cmd='SQLCMD -E -S $SQL_PROJECT_SERVER -Q '
+alias tf_upgrade='python ~/git/devstuff/tensorflow/tensorflow/tools/compatibility/tf_upgrade.py'
 
 ssh:forefront(){
     ssh -i ~/.ssh/azure_ubuntu forefront@52.163.58.130
@@ -28,6 +29,12 @@ selfsign(){
     openssl req -new -sha256 -key key.pem -out csr.csr
     openssl req -x509 -sha256 -days 365 -key key.pem -in csr.csr -out cert.pem
     openssl pkcs12 -inkey key.pem -in cert.pem -export -out pfx.pfx
+}
+
+pullall(){
+    for branch in `git branch -a | grep remotes | grep -v HEAD | grep -v master `; do
+	git branch --track ${branch#remotes/origin/} $branch
+    done
 }
 
 ICU_UAT_SERVER=ubuntu@ec2-52-62-220-44.ap-southeast-2.compute.amazonaws.com
