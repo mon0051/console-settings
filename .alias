@@ -17,6 +17,7 @@ alias untar='tar -zxvf'
 alias sinst='sudo apt-get install'
 alias sql:cmd='SQLCMD -E -S $SQL_PROJECT_SERVER -Q '
 alias tf_upgrade='python ~/git/devstuff/tensorflow/tensorflow/tools/compatibility/tf_upgrade.py'
+alias openssl_path='/usr/lib/ssl/openssl.cnf'
 
 ssh:forefront(){
     ssh -i ~/.ssh/azure_ubuntu forefront@52.163.58.130
@@ -120,6 +121,33 @@ git:cleanup (){
 pushup (){
     THIS_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
     git push --set-upstream origin $THIS_BRANCH
+}
+
+selfsign (){
+	openssl req \
+    -newkey rsa:2048 \
+    -x509 \
+    -nodes \
+    -keyout $1.key \
+    -new \
+    -out $1.crt \
+    -subj /CN=$1 \
+    -reqexts SAN \
+    -extensions SAN \
+    -config <(cat /usr/lib/ssl/openssl.cnf \
+        <(printf '[SAN]\nsubjectAltName=DNS:'$1)) \
+    -sha256 \
+    -days 3650
+
+    openssl pkcs12 -export -out $1.pfx -inkey $1.key -in $1.crt -name $1
+    cp $1.key /c/Temp/
+    cp $1.crt /c/Temp/
+    cp $1.pfx /c/Temp/
+}
+
+vartest (){
+	echo $1
+	echo $1.dop
 }
 
 echo "Alias's Updated"
