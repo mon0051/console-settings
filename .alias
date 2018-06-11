@@ -18,7 +18,12 @@ alias sinst='sudo apt-get install'
 alias sql:cmd='SQLCMD -E -S $SQL_PROJECT_SERVER -Q '
 alias tf_upgrade='python ~/git/devstuff/tensorflow/tensorflow/tools/compatibility/tf_upgrade.py'
 alias openssl_path='/usr/lib/ssl/openssl.cnf'
-
+alias upache='sudo service apache2 start'
+alias repache='sudo service apache2 restart'
+alias upmysql='sudo service mysql start'
+alias remysql='sudo service mysql restart'
+alias rebash='. ~/.alias'
+alias sin='sudo apt-get install'
 ssh:forefront(){
     ssh -i ~/.ssh/azure_ubuntu forefront@52.163.58.130
 }
