@@ -7,7 +7,7 @@
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster2"
+ZSH_THEME="agnoster-nl"
 export LS_COLORS="di=93:ln=36:so=35:pi=33:ex=92:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=34:ow=94"
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -87,3 +87,18 @@ export PATH="/home/mon/anaconda2/bin:$PATH"
 source ~/.vars
 source ~/.alias
 source ~/.custom_settings
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/mon/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/mon/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/mon/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/mon/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<

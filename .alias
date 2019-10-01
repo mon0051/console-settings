@@ -10,8 +10,6 @@ alias gamend='git add -A && git commit --amend'
 alias turbostash='git add -A && git stash'
 alias qpush='git add -A && git commit -m Quick_Push && git push'
 alias fpush='git push --force origin $(git rev-parse --abbrev-ref HEAD)'
-alias db:recreate='./BlueWave\ Database\ Recreate.bat'
-alias db:recreate-dev='./BlueWave\ Database\ Recreate\ Dev.bat'
 alias rebash='. ~/.vars && . ~/.alias && . ~/.custom_settings'
 alias untar='tar -zxvf'
 alias sinst='sudo apt-get install'
@@ -91,7 +89,7 @@ db:restore (){
     #sql:cmd "ALTER AUTHORIZATION ON DATABASE::"$SQL_PROJECT_NAME" TO "$PROJECT_APPPOOL_USER
 }
 
-db:recreate () {
+db:recreate (){
     sql:cmd "BACKUP DATABASE BlueWave TO DISK='"$SQL_TEMP_LOCATION"'"
     sql:cmd "ALTER DATABASE BlueWave SET single_user WITH ROLLBACK immediate;
              DROP DATABASE BLueWave;"
